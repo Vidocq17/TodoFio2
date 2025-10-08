@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useTaskStore } from '@/stores/useTaskStore'
+import { useTaskStore } from '@/Stores/useTaskStore'
 import { toast } from 'vue3-toastify'
 
 const taskStore = useTaskStore()
