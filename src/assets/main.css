@@ -59,11 +59,50 @@ h2 {
   margin-bottom: 1rem;
   border-left: 5px solid #f4a9c4;
   position: relative;
+  display: flex;
+  width: auto;
+  flex-direction: row;
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centre verticalement sur desktop */
+  align-items: flex-start; /* colle à gauche */
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* à droite sur desktop */
+  justify-content: center; /* centré verticalement */
+  gap: 1rem;
 }
 
 .task-card h3 {
   margin: 0 0 0.5rem 0;
   color: #b45e93;
+}
+
+@media screen and (max-width: 600px) {
+  .task-card {
+    flex-direction: column;
+    align-items: flex-start; /* pour éviter le centrage global */
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; /* bien centré horizontalement */
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .info-card {
+    align-items: flex-start;
+    width: 100%;
+  }
 }
 
 .status,
@@ -77,22 +116,11 @@ h2 {
   justify-content: center;
 }
 
-.actions {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 20px;
-}
 
 .actions button {
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
-  margin-left: 5px;
   padding: .5rem;
   border-radius: 12px;
   width: 10rem;
@@ -114,6 +142,8 @@ h2 {
   font-weight: bold;
   color: red;
   font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
 }
 
 button:disabled {

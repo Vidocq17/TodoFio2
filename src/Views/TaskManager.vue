@@ -91,7 +91,8 @@ const getBackgroundImportance = (t) => {
         class="task-card"
         :style="getBackgroundImportance(task)"
       >
-        <h3 :class="[task.status === 'terminée' ? 'taskDone' : '']">{{ task.nom }}</h3>
+        <div class="info-card">
+          <h3 :class="[task.status === 'terminée' ? 'taskDone' : '']">{{ task.nom }}</h3>
         <p>{{ task.description }}</p>
         <p class="status">Importance : {{ task.importance === 'Urgent' ? '🔥' : '💤' }}</p>
         <p class="status">Statut : {{ task.status }}</p>
@@ -102,9 +103,10 @@ const getBackgroundImportance = (t) => {
         >
           Deadline : {{ formatDate(task.deadline) }}
           <span v-if="isToday(task.deadline)">
-            - Attention ma vie c'est pour aujourd'hui ! 😱
+            Attention ma vie c'est pour aujourd'hui ! 😱
           </span>
         </p>
+        </div>
 
         <div class="actions">
           <button @click="editTask(task)" style="background-color: yellow;">✏️ Modifier</button>
