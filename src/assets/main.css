@@ -17,18 +17,23 @@ h1, h2, h3, h4, h5, h6, p {
 h2 {
   text-align: center;
   color: #d070a0;
+  margin-bottom: 2rem;
 }
 
-.task-form input,
-.task-form textarea,
-.task-form select {
+input, textarea, select {
   display: block;
   width: auto;
-  margin-bottom: 1rem;
-  padding: 0.7rem;
+  padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #fffafc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+textarea::placeholder {
+  position: relative;
+  top: 7px;
+  
 }
 
 #submit {
@@ -40,7 +45,7 @@ h2 {
   cursor: pointer;
   transition: background 0.3s;
   display: flex;
-  margin: auto;
+  margin: 1rem auto;
 }
 
 .task-form button:hover {
@@ -135,6 +140,28 @@ h2 {
   cursor: not-allowed !important;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.hidden {
+  display: none;
+}
+
+.filter-bar {
+  margin-bottom: 1em;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 @media screen and (max-width: 600px) {
   .task-card {
     flex-direction: column;
@@ -156,4 +183,32 @@ h2 {
   .is-today-date {
     flex-direction: column;
   }
+  .task-manager h2 {
+    margin-bottom: 1rem;
+  }
+}
+
+.big-congrats-message {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff69b4;
+  text-align: center;
+  margin: 1em 0;
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Transition Vue */
+.message-fade-enter-active,
+.message-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.message-fade-enter-from,
+.message-fade-leave-to {
+  opacity: 0;
 }
