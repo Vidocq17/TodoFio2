@@ -1,3 +1,8 @@
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
 .task-manager {
   height: 100vh;
   margin: auto;
@@ -85,26 +90,6 @@ h2 {
   color: #b45e93;
 }
 
-@media screen and (max-width: 600px) {
-  .task-card {
-    flex-direction: column;
-    align-items: flex-start; /* pour éviter le centrage global */
-  }
-
-  .actions {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; /* bien centré horizontalement */
-    margin-top: 1rem;
-    width: 100%;
-  }
-
-  .info-card {
-    align-items: flex-start;
-    width: 100%;
-  }
-}
-
 .status,
 .deadline {
   font-weight: bold;
@@ -143,10 +128,32 @@ h2 {
   color: red;
   font-size: 1.3rem;
   display: flex;
-  flex-direction: column;
 }
 
-button:disabled {
-  background-color: grey;
-  cursor: not-allowed;
+.disabled {
+  background-color: grey !important;
+  cursor: not-allowed !important;
+}
+
+@media screen and (max-width: 600px) {
+  .task-card {
+    flex-direction: column;
+    align-items: flex-start; /* pour éviter le centrage global */
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; /* bien centré horizontalement */
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .info-card {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .is-today-date {
+    flex-direction: column;
+  }
 }

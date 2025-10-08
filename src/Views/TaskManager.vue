@@ -45,7 +45,6 @@ const saveEdit = async () => {
   if (!editingTask.value || editingTask.value.id == null) return
   await taskStore.updateTask(editingTask.value.id, editingTask.value)
   editingTask.value = null
-  toast.success('Tâche mise à jour avec succès')
 }
 
 const cancelEdit = () => {
@@ -82,7 +81,7 @@ const getBackgroundImportance = (t) => {
       </select>
       <input v-model="newTask.deadline" type="date" />
     </form>
-    <button type="submit" id="submit" :disabled="!isValid" @click="handleAddTask">Ajouter</button>
+    <button type="submit" id="submit" :class="[isValid ? 'enabled' : 'disabled']" @click="handleAddTask">Ajouter</button>
 
     <div class="task-list">
       <div
@@ -92,44 +91,75 @@ const getBackgroundImportance = (t) => {
         :style="getBackgroundImportance(task)"
       >
         <div class="info-card">
-          <h3 :class="[task.status === 'terminée' ? 'taskDone' : '']">{{ task.nom }}</h3>
-        <p>{{ task.description }}</p>
-        <p class="status">Importance : {{ task.importance === 'Urgent' ? '🔥' : '💤' }}</p>
-        <p class="status">Statut : {{ task.status }}</p>
-        <p
-          v-if="task.deadline"
-          class="deadline"
-          :class="[isToday(task.deadline) ? 'is-today-date' : '']"
-        >
-          Deadline : {{ formatDate(task.deadline) }}
-          <span v-if="isToday(task.deadline)">
-            Attention ma vie c'est pour aujourd'hui ! 😱
-          </span>
-        </p>
+
+          <!-- NOM -->
+          <template v-if="editingTask && editingTask.id === task.id">
+            <input v-model="editingTask.nom" />
+          </template>
+          <template v-else>
+            <h3 :class="[task.status === 'terminée' ? 'taskDone' : '']">{{ task.nom }}</h3>
+          </template>
+
+          <!-- DESCRIPTION -->
+          <template v-if="editingTask && editingTask.id === task.id">
+            <textarea v-model="editingTask.description"></textarea>
+          </template>
+          <template v-else>
+            <p>{{ task.description }}</p>
+          </template>
+
+          <!-- IMPORTANCE -->
+          <template v-if="editingTask && editingTask.id === task.id">
+            <select v-model="editingTask.importance">
+              <option>Peu important</option>
+              <option>Urgent</option>
+            </select>
+          </template>
+          <template v-else>
+            <p class="status">Importance : {{ task.importance === 'Urgent' ? '🔥' : '💤' }}</p>
+          </template>
+
+          <!-- STATUT -->
+          <template v-if="editingTask && editingTask.id === task.id">
+            <select v-model="editingTask.status">
+              <option>en cours</option>
+              <option>terminée</option>
+            </select>
+          </template>
+          <template v-else>
+            <p class="status">Statut : {{ task.status }}</p>
+          </template>
+
+          <!-- DEADLINE -->
+          <template v-if="editingTask && editingTask.id === task.id">
+            <input v-model="editingTask.deadline" type="date" />
+          </template>
+          <template v-else>
+            <p
+              v-if="task.deadline"
+              class="deadline"
+              :class="[isToday(task.deadline) ? 'is-today-date' : '']"
+            >
+              Deadline : {{ formatDate(task.deadline) }} - 
+              <span v-if="isToday(task.deadline)">
+              Attention ma vie c'est pour aujourd'hui ! 😱
+              </span>
+            </p>
+          </template>
         </div>
 
+        <!-- ACTIONS -->
         <div class="actions">
-          <button @click="editTask(task)" style="background-color: yellow;">✏️ Modifier</button>
-          <button @click="taskStore.deleteTask(task.id)" style="background-color: red;">🗑️ Supprimer</button>
+          <template v-if="editingTask && editingTask.id === task.id">
+            <button @click="saveEdit" style="background-color: lightgreen;">💾 Enregistrer</button>
+            <button @click="cancelEdit" style="background-color: orange;">❌ Annuler</button>
+          </template>
+          <template v-else>
+            <button @click="editTask(task)" style="background-color: yellow;">✏️ Modifier</button>
+            <button @click="taskStore.deleteTask(task.id)" style="background-color: red;">🗑️ Supprimer</button>
+          </template>
         </div>
       </div>
-    </div>
-
-    <div v-if="editingTask" class="edit-modal">
-      <h3>Modifier la tâche</h3>
-      <input v-model="editingTask.nom" />
-      <textarea v-model="editingTask.description" />
-      <select v-model="editingTask.status">
-        <option>en cours</option>
-        <option>terminée</option>
-      </select>
-      <select v-model="editingTask.importance">
-        <option>Peu important</option>
-        <option>Urgent</option>
-      </select>
-      <input v-model="editingTask.deadline" type="date" />
-      <button @click="saveEdit">Enregistrer</button>
-      <button @click="cancelEdit">Annuler</button>
     </div>
   </div>
 </template>
