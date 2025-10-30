@@ -141,6 +141,9 @@ const sobriquets = [
   "torpille du planning",
   "ma bombe atomique de la gestion",
   "perle de l'organisation",
+  "détentrice du fessier divin",
+  "reine de sous la couette",
+  
 ]
 
 const sobriquet = ref('')
